@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 14:17:24 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/11/25 19:55:06 by jsandsla         ###   ########.fr       */
+/*   Created: 2020/11/25 19:50:34 by jsandsla          #+#    #+#             */
+/*   Updated: 2020/11/25 19:52:29 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <device.h>
-#include <stdio.h>
+#include "device_private.h"
 
-int		loop(void *param)
+t_mouse	*get_device_mouse(t_device *dv)
 {
-	(void)param;
-	return (1);
+	return (&dv->mouse);
 }
 
-int		main()
+int		get_device_key(t_device *dv)
 {
-	void	*dv;
+	return (dv->key);
+}
 
-	if ((dv = create_device()))
-	{
-		if (create_window(dv, 800, 600, "Hello world!"))
-		{
-			device_main_loop(dv, loop, 0);
-		}
-		free_device(dv);
-		dv = 0;
-	}
+int		is_device_exposed(t_device *dv)
+{
+	return (dv->exposed);
 }

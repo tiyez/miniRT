@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 14:17:24 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/11/25 19:55:06 by jsandsla         ###   ########.fr       */
+/*   Created: 2020/11/25 19:31:22 by jsandsla          #+#    #+#             */
+/*   Updated: 2020/11/25 20:33:17 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <device.h>
-#include <stdio.h>
+#include "device_private.h"
+#include <mlx.h>
 
-int		loop(void *param)
+void	prepare_device_events(t_device *dv)
 {
-	(void)param;
-	return (1);
+	int		x;
+	int		y;
+
+	mlx_mouse_get_pos(dv->winmlx, &x, &y);
+	dv->mouse.dx = x - dv->mouse.x;
+	dv->mouse.dy = y - dv->mouse.y;
+	dv->mouse.x = x;
+	dv->mouse.y = y;
 }
 
-int		main()
+void	reset_device_events(t_device *dv)
 {
-	void	*dv;
-
-	if ((dv = create_device()))
-	{
-		if (create_window(dv, 800, 600, "Hello world!"))
-		{
-			device_main_loop(dv, loop, 0);
-		}
-		free_device(dv);
-		dv = 0;
-	}
+	dv->exposed = 0;
+	dv->key = -1;
+	dv->mouse.left = 0;
+	dv->mouse.right = 0;
+	dv->mouse.middle = 0;
+	dv->mouse.scroll = 0;
 }
