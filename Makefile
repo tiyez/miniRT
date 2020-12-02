@@ -1,9 +1,16 @@
 
 NAME=miniRT
 
-MLX_NAME=libmlx.a
-MLX_DIR=miniLibX/
-MLX=$(MLX_DIR)$(MLX_NAME)
+MLX_NAME=libmlx.dylib
+#MLX_NAME=libmlx.a
+MLX_DIR=minilibx/
+MLX_REMOTE=$(MLX_DIR)$(MLX_NAME)
+MLX=$(MLX_NAME)
+#MLX=$(MLX_DIR)$(MLX_NAME)
+
+GNL_NAME=libgnl.a
+GNL_DIR=get_next_line/
+GNL=$(GNL_DIR)$(GNL_NAME)
 
 LIBFT_NAME=libft.a
 LIBFT_DIR=libft/
@@ -14,45 +21,61 @@ DEVICE_DIR=device/
 DEVICE=$(DEVICE_DIR)$(DEVICE_NAME)
 
 FLAGS=\
--framework OpenGL -framework AppKit \
+-O2 \
 -Wall -Wextra -Werror \
 -I. -I$(LIBFT_DIR) -I$(MLX_DIR) -I$(DEVICE_DIR) -Iget_next_line/
 
-SRC=
+SRC=\
+parse.c\
+error.c\
+free.c
 OBJ=$(SRC:.c=.o)
 HEADERS=minirt.h
 
-all: $(NAME)
+all:
+	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) -C $(LIBFT_DIR) part1
+	@$(MAKE) -C $(LIBFT_DIR) fd
+	@$(MAKE) -C $(LIBFT_DIR) b
+	@$(MAKE) -C $(LIBFT_DIR) vs
+	@$(MAKE) -C $(LIBFT_DIR) vmath_ext
+	@$(MAKE) -C $(LIBFT_DIR) vmath_quat
+	@$(MAKE) -C $(LIBFT_DIR) intersection
+	@$(MAKE) -C $(DEVICE_DIR)
+	@$(MAKE) -C $(MLX_DIR)
+	@$(MAKE) -C $(GNL_DIR)
+	@$(MAKE) $(NAME)
 
 $(SRC): $(HEADERS)
-$(OBJ): $(MLX) $(LIBFT) $(DEVICE)
+$(OBJ): $(LIBFT) $(DEVICE) $(HEADERS)
 %.o: %.c
-	gcc $(FLAGS) -c $(MLX) $(LIBFT) $(DEVICE) $< -o $@
+	gcc $(FLAGS) -c $< -o $@
 
-$(NAME): $(MLX) $(LIBFT) $(DEVICE)
+$(NAME): $(LIBFT) $(DEVICE) $(MLX) $(GNL)
 $(NAME): main.c $(HEADERS)
 $(NAME): $(OBJ)
-	gcc main.c $(FLAGS) -o $(NAME) $(OBJ) $(MLX) $(LIBFT) $(DEVICE)
+	gcc main.c $(FLAGS) -o $(NAME) $(OBJ) $(LIBFT) $(DEVICE) $(MLX) $(GNL) -framework Metal -framework AppKit
 
-$(MLX):
+$(MLX_REMOTE):
 	$(MAKE) -C $(MLX_DIR)
-
-$(LIBFT):
-	$(MAKE) -C $(LIBFT_DIR)
-	$(MAKE) -C $(LIBFT_DIR) part1
-	$(MAKE) -C $(LIBFT_DIR) d
-
-$(DEVICE):
-	$(MAKE) -C $(DEVICE_DIR)
+$(MLX): $(MLX_REMOTE)
+	cp $(MLX_REMOTE) .
+#$(MLX):
+#	$(MAKE) -C $(MLX_DIR)
 
 clean:
 	rm -rf $(OBJ) main.o
-	$(MAKE) -C $(MLX_DIR) clean
-	$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(MLX_DIR) clean
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@$(MAKE) -C $(DEVICE_DIR) clean
+	@$(MAKE) -C $(GNL_DIR) clean
 
 fclean: clean
 	rm -rf $(NAME)
-	$(MAKE) -C $(MLX_DIR) fclean
-	$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(MLX_DIR) fclean
+	rm -rf $(MLX)
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(DEVICE_DIR) fclean
+	@$(MAKE) -C $(GNL_DIR) fclean
 
 re: fclean all

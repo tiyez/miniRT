@@ -6,7 +6,7 @@
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:24:37 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/11/25 20:00:57 by jsandsla         ###   ########.fr       */
+/*   Updated: 2020/11/26 18:48:53 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,17 @@ typedef struct	s_mouse
 	int		middle;
 	int		scroll;
 }		t_mouse;
+
+typedef struct	s_image
+{
+	void			*dv;
+	void			*img;
+	int				width;
+	int				height;
+	int				bpp;
+	int				line_sz;
+	unsigned char	*ptr;
+}		t_image;
 
 typedef struct	s_device
 {

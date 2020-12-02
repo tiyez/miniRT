@@ -6,7 +6,7 @@
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:41:05 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/11/25 20:27:02 by jsandsla         ###   ########.fr       */
+/*   Updated: 2020/11/26 19:59:29 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ t_device	*create_device(void)
 
 void		free_device(t_device *dv)
 {
+	if (dv->mlx && dv->winmlx)
+		mlx_destroy_window(dv->mlx, dv->winmlx);
 	if (dv->mlx)
 		free(dv->mlx);
-	if (dv->winmlx)
-		free(dv->winmlx);
 	dv->mlx = NULL;
 	dv->winmlx = NULL;
 	free(dv);

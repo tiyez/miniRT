@@ -6,7 +6,7 @@
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:32:29 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/11/25 20:42:58 by jsandsla         ###   ########.fr       */
+/*   Updated: 2020/11/26 20:55:36 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int		device_main_loop(t_device *dv, int (*f)(), void *param)
 int		loop_hook(t_device *dv)
 {
 	prepare_device_events(dv);
-	dv->main_loop(dv->main_loop_param);
+	if (dv->main_loop)
+		dv->main_loop(dv->main_loop_param);
 	reset_device_events(dv);
+	mlx_do_sync(dv->mlx);
 	return (1);
 }
 
