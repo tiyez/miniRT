@@ -6,7 +6,7 @@
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 15:15:04 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/12/02 12:14:52 by jsandsla         ###   ########.fr       */
+/*   Updated: 2020/12/07 17:02:23 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ void	free_rt(t_rt *rt)
 		free(rt->mlx);
 	free(rt);
 }
-

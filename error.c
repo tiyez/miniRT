@@ -6,7 +6,7 @@
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 15:11:53 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/11/28 15:12:33 by jsandsla         ###   ########.fr       */
+/*   Updated: 2020/12/07 17:02:03 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 void	error_header(void)
 {
 	static	int	error_printed;
+
 	if (!error_printed)
 		ft_putstr("Error\n");
 	error_printed = 1;
@@ -85,4 +86,3 @@ void	error_exit(const char *msg, t_rt *rt)
 	free_rt(rt);
 	exit(EXIT_FAILURE);
 }
-
