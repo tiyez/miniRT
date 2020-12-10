@@ -6,7 +6,7 @@
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 14:17:24 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/12/07 17:05:06 by jsandsla         ###   ########.fr       */
+/*   Updated: 2020/12/10 15:33:38 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,24 @@ void	run_rt(int argc, char *av[], t_rt *rt)
 
 	rt->mlx = mlx_init();
 	scn = new_scene(rt);
-	parse_scene_file(scn, av[1]);
-	init_scene_img(scn);
-	render_scene(rt);
-	scene_blit(scn);
-	if (argc == 3 && ft_strncmp(av[2], "--save", 6) == 0)
-		save_scene_bmp(rt, &rt->scenes[rt->scn_i]);
-	else
+	if (scn)
 	{
-		rt->win = mlx_new_window(rt->mlx, scn->width, scn->height, "miniRT");
-		mlx_put_image_to_window(rt->mlx, rt->win, scn->img.img, 0, 0);
-		mlx_hook(rt->win, 2, 0, get_keypress, rt);
-		mlx_hook(rt->win, 17, 0, free_and_exit, rt);
-		mlx_loop_hook(rt->mlx, loop, rt);
-		mlx_loop(rt->mlx);
+		parse_scene_file(scn, av[1]);
+		init_scene_img(scn);
+		render_scene(rt);
+		scene_blit(scn);
+		if (argc == 3 && ft_strncmp(av[2], "--save", 6) == 0)
+			save_scene_bmp(rt, &rt->scenes[rt->scn_i]);
+		else
+		{
+			rt->win = mlx_new_window(rt->mlx, scn->width, scn->height,
+				"miniRT");
+			mlx_put_image_to_window(rt->mlx, rt->win, scn->img.img, 0, 0);
+			mlx_hook(rt->win, 2, 0, get_keypress, rt);
+			mlx_hook(rt->win, 17, 0, free_and_exit, rt);
+			mlx_loop_hook(rt->mlx, loop, rt);
+			mlx_loop(rt->mlx);
+		}
 	}
 }
 

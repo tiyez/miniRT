@@ -73,7 +73,7 @@ int		render_scene(t_rt *rt)
 		&scn->cameras[scn->cam_i] : 0;
 	if (cam)
 		render_to_framebuffer(scn, cam);
-	if (scn->edit_mode)
+	if (scn && scn->edit_mode)
 		render_edit(scn);
 	return (!!cam);
 }
