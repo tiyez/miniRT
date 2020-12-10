@@ -6,7 +6,7 @@
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 16:06:27 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/12/07 16:06:57 by jsandsla         ###   ########.fr       */
+/*   Updated: 2020/12/10 15:15:15 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	create_square(t_square *sq, t_v3 center, float side, t_v3 normal)
 	ft_make_xangle_dir(normal, xangle);
 	ft_make_xangle_axis(xangle, ax[0], ax[1], ax[2]);
 	ft_copy_v3(normal, sq->normal);
+	side *= 0.5f;
 	ft_mulvs_add_v3(ax[0], side, center, sq->pos[0]);
 	ft_mulvs_add_v3(ax[1], side, sq->pos[0], sq->pos[0]);
 	ft_mulvs_add_v3(ax[0], -side, center, sq->pos[1]);
@@ -35,7 +36,7 @@ float	get_square_side(t_square *sq)
 	t_v3	sub;
 
 	ft_sub_v3(sq->pos[0], sq->pos[1], sub);
-	return (ft_length_v3(sub) * 0.5f);
+	return (ft_length_v3(sub));
 }
 
 void	get_square_pos(t_square *sq, t_v3 pos)

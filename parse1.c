@@ -6,7 +6,7 @@
 /*   By: jsandsla <jsandsla@student.21-school.ru>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/07 15:42:01 by jsandsla          #+#    #+#             */
-/*   Updated: 2020/12/07 15:42:17 by jsandsla         ###   ########.fr       */
+/*   Updated: 2020/12/10 15:17:08 by jsandsla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ int		parse_light(t_scene *scn, t_vs *vs)
 	success = success && !!ft_vs_read_float(vs, &light->brightness);
 	success = success && parse_scene_line_color(vs, light->color);
 	light->shadow_cast = 1;
+	light->brightness = FT_CLAMP(light->brightness, 0, 1);
+	light->brightness *= 100;
 	return (success);
 }
